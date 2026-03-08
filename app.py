@@ -40,7 +40,7 @@ def process_sonouroflow(audio_bytes, void_volume):
     filter_rms = pd.Series(rms_values).rolling(window=9, min_periods=1, center=True).mean().values
     
     # 面積轉換與排尿量校正
-    area = np.trapz(filter_rms, x=rms_time)
+    area = np.trapezoid(filter_rms, x=rms_time)
     if area > 0 and void_volume > 0:
         truevalue = np.round(filter_rms * (void_volume / area), 1)
     else:
